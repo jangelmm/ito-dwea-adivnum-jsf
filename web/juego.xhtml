@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>Adivina el Número</title>
+</h:head>
+<h:body>
+    <h2>Adivina el Número</h2>
+    
+    <h:form>
+        <!-- Aquí se imprime si es mayor, menor, victoria o derrota -->
+        <h3 style="color: blue;"><h:outputText value="#{juego.mensaje}" /></h3>
+        
+        <h:outputLabel value="Tu intento: " />
+        <h:inputText value="#{juego.intentoActual}" disabled="#{juego.terminado}" required="true" />
+        <br/><br/>
+
+        <h:commandButton value="Adivinar" action="#{juego.evaluarIntento}" disabled="#{juego.terminado}" />
+        <h:commandButton value="Nueva Configuración" action="#{juego.reiniciar}" immediate="true" style="margin-left: 10px;" />
+    </h:form>
+</h:body>
+</html>

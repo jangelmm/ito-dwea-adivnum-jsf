@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>Configurar Juego</title>
+</h:head>
+<h:body>
+    <h2>Configuración: Adivina el Número</h2>
+    <h:form>
+        <h:messages style="color: red;" />
+        
+        <h:outputLabel value="Valor Inicial: " />
+        <h:inputText value="#{juego.valorInicial}" required="true" />
+        <br/><br/>
+
+        <h:outputLabel value="Valor Final: " />
+        <h:inputText value="#{juego.valorFinal}" required="true" />
+        <br/><br/>
+
+        <h:outputLabel value="Número de Intentos: " />
+        <h:inputText value="#{juego.intentos}" required="true" />
+        <br/><br/>
+
+        <h:commandButton value="Comenzar Juego" action="#{juego.iniciarJuego}" />
+    </h:form>
+</h:body>
+</html>
