@@ -3,26 +3,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html">
 <h:head>
-    <title>Configurar Juego</title>
+    <title>Adivina el Número</title>
 </h:head>
 <h:body>
-    <h2>Configuración: Adivina el Número</h2>
-    <h:form>
+    <h2>Formularios</h2>
+    
+    <h:form id="formularioPrincipal">
+        
+        <!-- Mensajes de error de validación (campos vacíos) -->
         <h:messages style="color: red;" />
         
-        <h:outputLabel value="Valor Inicial: " />
-        <h:inputText value="#{juego.valorInicial}" required="true" />
-        <br/><br/>
+        <!-- SECCIÓN 1: CONFIGURACIÓN EN TABLA (Visible al inicio) -->
+        <h:panelGroup rendered="#{!juego.juegoIniciado}">
+            
+            <!-- Mensaje de error si la configuración falla (ej. rango inválido) -->
+            <h:outputText value="#{juego.mensaje}" style="color: red; font-weight: bold; display: block; margin-bottom: 10px;" rendered="#{not empty juego.mensaje and !juego.juegoIniciado}" />
+            
+            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; text-align: left;">
+                <tr>
+                    <th style="background-color: #f2f2f2;">Títulos</th>
+                    <th style="background-color: #f2f2f2;">Campos</th>
+                </tr>
+                <tr>
+                    <td>Límite Inicial</td>
+                    <td><h:inputText value="#{juego.valorInicial}" required="true" requiredMessage="El límite inicial es obligatorio" /></td>
+                </tr>
+                <tr>
+                    <td>Límite Final</td>
+                    <td><h:inputText value="#{juego.valorFinal}" required="true" requiredMessage="El límite final es obligatorio" /></td>
+                </tr>
+                <tr>
+                    <td>Intentos</td>
+                    <td><h:inputText value="#{juego.intentos}" required="true" requiredMessage="Los intentos son obligatorios" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <h:commandButton value="Iniciar" action="#{juego.iniciarJuego}" />
+                    </td>
+                </tr>
+            </table>
+        </h:panelGroup>
 
-        <h:outputLabel value="Valor Final: " />
-        <h:inputText value="#{juego.valorFinal}" required="true" />
-        <br/><br/>
-
-        <h:outputLabel value="Número de Intentos: " />
-        <h:inputText value="#{juego.intentos}" required="true" />
-        <br/><br/>
-
-        <h:commandButton value="Comenzar Juego" action="#{juego.iniciarJuego}" />
+        <!-- SECCIÓN 2: JUEGO EN TABLA (Visible al comenzar a jugar) -->
+        <h:panelGroup rendered="#{juego.juegoIniciado}">
+            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; text-align: left;">
+                <tr>
+                    <th colspan="2" style="background-color: #e6f7ff; text-align: center;">Tablero de Juego</th>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Estatus / Resultado:</td>
+                    <td style="color: blue; font-weight: bold;">
+                        <h:outputText value="#{juego.mensaje}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel value="Tu intento:" /></td>
+                    <td><h:inputText value="#{juego.intentoActual}" disabled="#{juego.terminado}" required="true" requiredMessage="Ingresa un número" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <h:commandButton value="Adivinar" action="#{juego.evaluarIntento}" disabled="#{juego.terminado}" />
+                        <h:commandButton value="Nueva Configuración" action="#{juego.reiniciar}" immediate="true" style="margin-left: 10px;" />
+                    </td>
+                </tr>
+            </table>
+        </h:panelGroup>
+        
     </h:form>
 </h:body>
 </html>
